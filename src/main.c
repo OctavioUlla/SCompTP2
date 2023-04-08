@@ -6,7 +6,7 @@
 
 #define MAXLEGHTSYMB 6
 
-extern int mult(int cantidad, int precio) __asm__("mult");
+extern int mult(int cantidad, int precio) __asm__("_mult");
 
 int main(void)
 {
