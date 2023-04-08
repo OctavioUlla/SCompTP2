@@ -5,13 +5,13 @@
 #include "../inc/getPrice.h"
 
 #define MAXLINES  20 // Maximas lineas que se leen de archivo price
-#define MAXLEGHT  512 // Macimo numero de caracteres por linea
+#define MAXLEGHT  512 // Macimo numero 8de caracteres por linea
 #define URL_MAX 512 // Largo maximo del URL
-#define MAXSYMB 5 // Cantidad maxima de simbolos
+#define MAXSYMB 7 // Cantidad maxima de simbolos
 #define MAXLEGHTSYMB 5 // Largo maximo de cada simbolo
 
 // Arreglo que guarda los simbolos validos
-char simbolos_validos[MAXSYMB][MAXLEGHTSYMB] = {"BTC","ETH","DOT","ADA","DOGE"};
+char simbolos_validos[MAXSYMB][MAXLEGHTSYMB] = {"BTC","ETH","DOT","ADA","DOGE","ALGO","MATIC"};
 
 // Estructura que guarda el header
 struct curl_slist header;
@@ -39,8 +39,9 @@ void serverRequest(int simbolo){
   CURLcode res;
 
   // Se llena la estructura header
-  header.data = "X-CoinAPI-Key: CD7B2B0E-4577-4035-A59C-54F68F576A4F";
+  header.data = "X-CoinAPI-Key: 8F6869F0-403C-410F-8365-4BAE173CC508";
   header.next = NULL;
+  // key de respaldo CD7B2B0E-4577-4035-A59C-54F68F576A4F
 
   // Se abre el archivo
   FILE* f = fopen("./tmp/price","w");
@@ -54,7 +55,7 @@ void serverRequest(int simbolo){
     char url_h[URL_MAX] = "_USD/current";
     strcat(url,simbolos_validos[simbolo]);
     strcat(url,url_h);
-
+    
     // Se configura curl
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 0); // Poner este bit en 1 para que la libreria exprese los comandos
     curl_easy_setopt(curl, CURLOPT_URL, url);
@@ -118,6 +119,7 @@ double formatPrice(){
       i++;
     }
   }
+
   // Cortamos la cadena para dejar solo el precio
   strcpy(price,strtok(price, " "));
   strcpy(price,strtok(NULL, ","));

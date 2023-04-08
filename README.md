@@ -7,3 +7,9 @@ Se debe utilizar el stack para convocar, enviar parámetros y devolver resultado
 La defensa del trabajo es GRUPAL (mínimo 2 estudiantes, máximo 3).
 
 Las presentaciones de los trabajos se realizarán utilizando GitHub (una cuenta privada). Cada grupo debe asignar un responsable (con email institucional) como usuario de la cuenta de GitHub. Se debe realizar un commit brevemente comentado con cada funcionalidad implementada y validada.-
+
+
+Modo de uso:
+$~ make all (para construir el proyecto)
+$~ ./bin./getPrice (para ejetuctar el programa)
+Luego, se ingresa un numero por consola y el programa devuelve el precio del simbolo seleccionado
