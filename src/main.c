@@ -6,7 +6,7 @@
 
 #define MAXLEGHTSYMB 6
 
-int64_t mult(int64_t cantidad, int64_t precio);
+double mult(double cantidad, double precio);
 
 int main(void)
 {
@@ -20,8 +20,8 @@ int main(void)
   // Se imprime por pantalla el nombre de la moneda y el precio
   printf("Precio %s: %f\n", nombre, precio);
 
-  int64_t precioFinal = mult(3, 5);
-  printf("PrecioFinal: %ld\n", precioFinal);
+  double precioFinal = mult(3, precio);
+  printf("PrecioFinal: %f\n", precioFinal);
 
   return 0;
 }

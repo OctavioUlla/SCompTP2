@@ -1,12 +1,8 @@
     global  mult
     section .text
 
-;mult(float cant,float precio);
+;double mult(double cant,double precio);
 mult:
-    
-    mov rax ,rdi ;move param cant to rax
-    mov rdx ,rsi ;move param percio to ecx
-
-    mul rdx ;multiplicar cant y precio
+    mulsd xmm0,xmm1
     
     ret
