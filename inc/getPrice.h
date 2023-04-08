@@ -1,0 +1,2 @@
+int getPrice();
+void serverRequest();
