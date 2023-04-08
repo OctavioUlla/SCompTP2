@@ -4,7 +4,7 @@ BIN_DIR = ./bin
 OBJ_DIR = ./obj
 
 CLFLAGS = gcc -g -Wall -pedantic -Werror -Wextra -Wconversion -std=gnu11
-NASMFLAGS = nasm -f elf64
+NASMFLAGS = nasm -felf64
 
 all: $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o 
 	@mkdir -p $(BIN_DIR)

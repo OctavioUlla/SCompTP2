@@ -1,13 +1,12 @@
-SECTION .TEXT
-	GLOBAL _mult
+    global  mult
+    section .text
 
 ;mult(float cant,float precio);
-_mult:
+mult:
     
-    mov eax, [ebp+4] ;move cant to eax
-    mov ecx, [ebp+8] ;move percio to ecx
+    mov rax ,rdi ;move param cant to rax
+    mov rdx ,rsi ;move param percio to ecx
 
-    mul ecx ;multiplicar cant y precio
-
-    leave
+    mul rdx ;multiplicar cant y precio
+    
     ret
