@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <curl/curl.h>
 #include "../inc/getPrice.h"
@@ -45,8 +47,14 @@ void serverRequest(int simbolo)
   header.next = NULL;
   // key de respaldo CD7B2B0E-4577-4035-A59C-54F68F576A4F
 
+  // Si la carpeta tmp no existe crearla
+  struct stat st = {0};
+  if (stat("./tmp", &st) == -1)
+  {
+    mkdir("./tmp", 0700);
+  }
   // Se abre el archivo
-  FILE *f = fopen("./price", "w");
+  FILE *f = fopen("./tmp/price", "w");
 
   // Se inicia curl
   curl = curl_easy_init();
@@ -111,7 +119,7 @@ int getSymbol()
 double formatPrice()
 {
   // Se abre el archivo
-  FILE *f = fopen("./price", "r");
+  FILE *f = fopen("./tmp/price", "r");
   // Variables que sirven para recorrer el archivo
   int i = 0;
   char saver[MAXLINES][MAXLEGHT];
