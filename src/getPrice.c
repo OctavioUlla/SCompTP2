@@ -11,9 +11,11 @@
 #define URL_MAX 512    // Largo maximo del URL
 #define MAXSYMB 7      // Cantidad maxima de simbolos
 #define MAXLEGHTSYMB 5 // Largo maximo de cada simbolo
+#define MAXFIAT 3
 
 // Arreglo que guarda los simbolos validos
 char simbolos_validos[MAXSYMB][MAXLEGHTSYMB] = {"BTC", "ETH", "DOT", "ADA", "DOGE", "ALGO", "MATIC"};
+char fiat_validas[MAXFIAT][MAXLEGHTSYMB] = {"USD","EUR","ARS"};
 
 // Estructura que guarda el header
 struct curl_slist header;
@@ -23,12 +25,13 @@ struct curl_slist header;
   @param combre Referencia al String donde se guardara el nombre del simbolo
   @return el precio en formato double
 */
-double getPrice(int simbolo, char *nombre)
+double getPrice(int simbolo, char* nombre_simbolo,int fiat,char* nombre_fiat)
 {
   // Se escrib el nombre del simbolo
-  strcpy(nombre, simbolos_validos[simbolo]);
+  strcpy(nombre_simbolo, simbolos_validos[simbolo]);
+  strcpy(nombre_fiat, fiat_validas[fiat]);
   // Se pide al sercido el precio del Simbolo
-  serverRequest(simbolo);
+  serverRequest(simbolo,fiat);
 
   return formatPrice();
 }
@@ -36,7 +39,7 @@ double getPrice(int simbolo, char *nombre)
 /* Funcion que pide al servidor el valor de un simbolo
   @param simbolo simbolo a obtener su precio
 */
-void serverRequest(int simbolo)
+void serverRequest(int simbolo,int fiat)
 {
   // Se crea el objeto curl
   CURL *curl;
@@ -62,10 +65,10 @@ void serverRequest(int simbolo)
   if (curl)
   {
     // Se genera el url para el simbolo obtenido
-    char url[URL_MAX] = "https://rest.coinapi.io/v1/quotes/BITSTAMP_SPOT_";
-    char url_h[URL_MAX] = "_USD/current";
+    char url[URL_MAX] = "https://rest.coinapi.io/v1/exchangerate/";
     strcat(url, simbolos_validos[simbolo]);
-    strcat(url, url_h);
+    strcat(url, "/");
+    strcat(url,fiat_validas[fiat]);
 
     // Se configura curl
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 0); // Poner este bit en 1 para que la libreria exprese los comandos
@@ -103,7 +106,7 @@ int getSymbol()
   // Se pide por pantalla un número
   scanf("%d", &simbolo);
   // Se verifica el numero
-  if (simbolo <= MAXSYMB && simbolo > 0)
+  if (simbolo <= MAXSYMB && simbolo > 0 )
   {
     return simbolo - 1;
   }
@@ -111,6 +114,46 @@ int getSymbol()
   {
     printf("No ha seleccionado un valor valido : ");
     return getSymbol();
+  }
+}
+
+int getFiat(){
+  int fiat;
+  printf("Seleccione una moneda fiat colocando un numero en la consola:\n");
+  for (int i = 0; i < MAXFIAT; i++)
+  {
+    printf("\t%i: %s\n", (i + 1), fiat_validas[i]);
+  }
+  printf("Su numero ~>  ");
+  // Se pide por pantalla un número
+  scanf("%d", &fiat);
+  // Se verifica el numero
+  if (fiat <= MAXSYMB && fiat > 0)
+  {
+    return fiat - 1;
+  }
+  else
+  {
+    printf("No ha seleccionado un valor valido : ");
+    return getFiat();
+  }
+}
+
+double getNCoins(){
+  float cantidad;
+  printf("Escriba por consola la cantidad de monedas a comprar:\n");
+  printf("Su numero ~>  ");
+  // Se pide por pantalla un número
+  scanf("%f", &cantidad);
+  // Se verifica el numero
+  if (cantidad > 0)
+  {
+    return (double)cantidad;
+  }
+  else
+  {
+    printf("No ha seleccionado un valor valido : ");
+    return getNCoins();
   }
 }
 /* Funcion que formatea el valor del precio a un valor double
@@ -129,9 +172,10 @@ double formatPrice()
   {
     if (fgets(saver[i], MAXLEGHT, f) != NULL)
     {
-      if (strstr(saver[i], "price") != NULL)
+      if (strstr(saver[i], "rate") != NULL)
       {
         strcpy(price, saver[i]);
+        break;
       }
       i++;
     }
@@ -139,7 +183,7 @@ double formatPrice()
 
   // Cortamos la cadena para dejar solo el precio
   strcpy(price, strtok(price, " "));
-  strcpy(price, strtok(NULL, ","));
+  strcpy(price, strtok(NULL, " "));
 
   // Se cierra el archivo
   fclose(f);
