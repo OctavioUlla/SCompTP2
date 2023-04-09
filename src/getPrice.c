@@ -11,9 +11,9 @@
 #define URL_MAX 512    // Largo maximo del URL
 #define MAXSYMB 7      // Cantidad maxima de simbolos
 #define MAXLEGHTSYMB 5 // Largo maximo de cada simbolo
-#define MAXFIAT 3
+#define MAXFIAT 3      // Cantidad maxima de fiat
 
-// Arreglo que guarda los simbolos validos
+// Arreglo que guardan los simbolos y las fiat validas
 char simbolos_validos[MAXSYMB][MAXLEGHTSYMB] = {"BTC", "ETH", "DOT", "ADA", "DOGE", "ALGO", "MATIC"};
 char fiat_validas[MAXFIAT][MAXLEGHTSYMB] = {"USD","EUR","ARS"};
 
@@ -27,10 +27,11 @@ struct curl_slist header;
 */
 double getPrice(int simbolo, char* nombre_simbolo,int fiat,char* nombre_fiat)
 {
-  // Se escrib el nombre del simbolo
+  // Se escribe el nombre del simbolo y de la fiat soliciadas
   strcpy(nombre_simbolo, simbolos_validos[simbolo]);
   strcpy(nombre_fiat, fiat_validas[fiat]);
-  // Se pide al sercido el precio del Simbolo
+
+  // Se pide al servidor el precio del Simbolo
   serverRequest(simbolo,fiat);
 
   return formatPrice();
@@ -56,6 +57,7 @@ void serverRequest(int simbolo,int fiat)
   {
     mkdir("./tmp", 0700);
   }
+
   // Se abre el archivo
   FILE *f = fopen("./tmp/price", "w");
 
@@ -96,16 +98,19 @@ void serverRequest(int simbolo,int fiat)
 */
 int getSymbol()
 {
-  int simbolo;
-  printf("Seleccione un simbolo colocando un numero en la consola:\n");
+
+  int simbolo; // Variable que guarda el nro del simbolo
+
+  // Se solicita por consola elegir un simbolo
+  printf("Por favor, seleccione un simbolo colocando un numero en la consola:\n");
   for (int i = 0; i < MAXSYMB; i++)
   {
     printf("\t%i: %s\n", (i + 1), simbolos_validos[i]);
   }
   printf("Su numero ~>  ");
-  // Se pide por pantalla un número
   scanf("%d", &simbolo);
-  // Se verifica el numero
+   
+  // Se verifica el numero @TODO revisar esto
   if (simbolo <= MAXSYMB && simbolo > 0 )
   {
     return simbolo - 1;
@@ -117,18 +122,23 @@ int getSymbol()
   }
 }
 
+/* Funcion que obtiene por consola el número de la fiat
+  @return fiat seleccionada por el usuario
+*/
 int getFiat(){
-  int fiat;
-  printf("Seleccione una moneda fiat colocando un numero en la consola:\n");
+  int fiat; // Variable que guarda el nro de la fiat
+
+  // Se solicita por consola elegir una fiat
+  printf("Por favor, seleccione una moneda fiat colocando un numero en la consola:\n");
   for (int i = 0; i < MAXFIAT; i++)
   {
     printf("\t%i: %s\n", (i + 1), fiat_validas[i]);
   }
   printf("Su numero ~>  ");
-  // Se pide por pantalla un número
   scanf("%d", &fiat);
-  // Se verifica el numero
-  if (fiat <= MAXSYMB && fiat > 0)
+
+  // Se verifica el numero @TODO revisar esto
+  if (fiat <= MAXFIAT && fiat > 0)
   {
     return fiat - 1;
   }
@@ -136,15 +146,20 @@ int getFiat(){
   {
     printf("No ha seleccionado un valor valido : ");
     return getFiat();
-  }
+  } 
 }
 
+/* Funcion que obtiene por consola el número de monedas a comprar
+  @return nro de monedas seleccionado por el usuario
+*/
 double getNCoins(){
-  float cantidad;
-  printf("Escriba por consola la cantidad de monedas a comprar:\n");
+  float cantidad; // Variable que guarda la cantidad de monedas
+
+  // Se pide por consola ingresar la cantidad de monedas
+  printf("Por favor, escriba por consola la cantidad de monedas a comprar:\n");
   printf("Su numero ~>  ");
-  // Se pide por pantalla un número
   scanf("%f", &cantidad);
+
   // Se verifica el numero
   if (cantidad > 0)
   {
@@ -156,6 +171,7 @@ double getNCoins(){
     return getNCoins();
   }
 }
+
 /* Funcion que formatea el valor del precio a un valor double
   @return valor del simbolo en formato double
 */
