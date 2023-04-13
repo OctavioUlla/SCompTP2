@@ -1,15 +1,12 @@
-# SCompTP2
+# **_SistCompTP2_**
 
-Para aprobar el TP#2 se debe diseñar e implementar una Calculadora de Cotización de Criptomonedas. La capa superior recuperará la cotización de al menos dos criptomonedas que pueden ser obtenidas de alguna de "Las 12 mejores API del mercado de valores para crear productos financieros". Se recomienda el uso de API Rest y python. Los datos de consulta realizados deben ser entregados a un programa en C que convocará rutinas en ensamblador para que hagan los cálculos de conversión y devuelvan las cotizaciones en pesos, u$s y euros. Luego el programa en C o python mostrará los cálculos obtenidos.-
+#### En el TP#2 se diseño e implemento una Calculadora de Cotización de Criptomonedas. La capa superior recupera la cotización de 7 criptomonedas obtenidas mediante la biblioteca CURL de C y la API Rest de la pagina BITSTAMP. El programa luego convoca con los datos de la consulta a rutinas en ensamblador que realizan la multiplicacion de la cantidad de monedas a comprar por el precio de las mismas.
 
-Se debe utilizar el stack para convocar, enviar parámetros y devolver resultados. O sea utilizar las convenciones de llamadas de lenguajes de alto nivel a bajo nivel.-
+## Modo de uso:
 
-La defensa del trabajo es GRUPAL (mínimo 2 estudiantes, máximo 3).
-
-Las presentaciones de los trabajos se realizarán utilizando GitHub (una cuenta privada). Cada grupo debe asignar un responsable (con email institucional) como usuario de la cuenta de GitHub. Se debe realizar un commit brevemente comentado con cada funcionalidad implementada y validada.-
-
-
-Modo de uso:
-$~ make all (para construir el proyecto)
-$~ ./bin./getPrice (para ejetuctar el programa)
-Luego, se ingresa un numero por consola y el programa devuelve el precio del simbolo seleccionado
+  #### 1. ```$~ make all ``` (para construir el proyecto).
+  #### 2. ``` $~ ./bin./getPrice ``` (para ejetuctar el programa).
+  #### 3. Luego, se pide ingresar por consola un numero correspondiente al signo del cual queremos saber su cotizacion.
+  #### 4. A continuacion, se pide ingresar otro numero correspondiente a la fiat contra la cual queremos expresar el valor del signo.
+  #### 5. Por ultimo, se pide ingresar por consola la cantidad de monedas a comprar. 
+> Ahora el programa imprimira la cotizacion solicitada 
