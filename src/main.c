@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <wait.h>
-#include <curl/curl.h>
 #include "../inc/coinHelper.h"
 #include "../inc/simbolos.h"
 
