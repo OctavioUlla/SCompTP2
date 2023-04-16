@@ -7,9 +7,9 @@ TMP_DIR = ./tmp
 CLFLAGS = gcc -g -Wall -pedantic -Werror -Wextra -Wconversion -std=gnu11
 NASMFLAGS = nasm -felf64
 
-all: $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o 
+all: $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o $(OBJ_DIR)/getSymbol.o $(OBJ_DIR)/simbolos.o
 	@mkdir -p $(BIN_DIR)
-	@$(CLFLAGS) $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o  -lcurl -o $(BIN_DIR)/getPrice
+	@$(CLFLAGS) $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o $(OBJ_DIR)/getSymbol.o $(OBJ_DIR)/simbolos.o  -lcurl -o $(BIN_DIR)/getPrice
 	@echo Todo ha sido construido correctamente
 
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
@@ -19,6 +19,14 @@ $(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
 $(OBJ_DIR)/getPrice.o: $(SRC_DIR)/getPrice.c
 	@mkdir -p $(OBJ_DIR)
 	@$(CLFLAGS) -c $(SRC_DIR)/getPrice.c -I $(INC_DIR) -o $(OBJ_DIR)/getPrice.o
+
+$(OBJ_DIR)/getSymbol.o: $(SRC_DIR)/getSymbol.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CLFLAGS) -c $(SRC_DIR)/getSymbol.c -I $(INC_DIR) -o $(OBJ_DIR)/getSymbol.o
+
+$(OBJ_DIR)/simbolos.o: $(SRC_DIR)/simbolos.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CLFLAGS) -c $(SRC_DIR)/simbolos.c -I $(INC_DIR) -o $(OBJ_DIR)/simbolos.o
 
 $(OBJ_DIR)/mult.o: $(SRC_DIR)/mult.asm
 	@mkdir -p $(OBJ_DIR)
