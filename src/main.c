@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <curl/curl.h>
-
 #include "../inc/getPrice.h"
+#include "../inc/coinHelper.h"
 
 #define MAXLEGHTSYMB 5 // Largo maximo de cada simbolo
 

@@ -3,7 +3,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "../inc/getSymbol.h"
+#include "../inc/coinHelper.h"
 #include "../inc/simbolos.h"
 
 /* Funcion que obtiene por consola el número del simbolo
