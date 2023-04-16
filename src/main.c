@@ -2,9 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <wait.h>
 #include <curl/curl.h>
-#include "../inc/getPrice.h"
 #include "../inc/coinHelper.h"
+#include "../inc/simbolos.h"
 
 #define MAXLEGHTSYMB 5 // Largo maximo de cada simbolo
 
@@ -33,8 +34,34 @@ int main(void)
   fiat = getFiat();
   system("clear");
 
-  // Se obtiene el precio y se lo imprime por pantalla
-  precio = getPrice(simbolo, nombre_simbolo, fiat, nombre_fiat);
+  // Se obtiene el precio
+  pid_t pid = fork();
+
+  if (pid == 0)
+  {
+    char cSimbolo[2];
+    char cFiat[2];
+
+    // Convertir int a string
+    sprintf(cSimbolo, "%d", simbolo);
+    sprintf(cFiat, "%d", fiat);
+
+    execl("./bin/getPrice", "getPrice", cSimbolo, cFiat, NULL);
+  }
+
+  if (waitpid(pid, NULL, 0) == -1)
+  {
+    printf("Error obteniendo precio!\n");
+    exit(1);
+  }
+
+  precio = formatPrice();
+
+  // Obtener nombres
+  strcpy(nombre_simbolo, getSymbolName(simbolo));
+  strcpy(nombre_fiat, getFiatName(fiat));
+
+  // Imprime precio
   printf("Precio de %s en %s: %f\n", nombre_simbolo, nombre_fiat, precio);
 
   // Se pide la cantidad de monedas y se calcula el resultado

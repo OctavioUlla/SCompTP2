@@ -6,6 +6,9 @@
 #include "../inc/coinHelper.h"
 #include "../inc/simbolos.h"
 
+#define MAXLINES 20  // Maximas lineas que se leen de archivo price
+#define MAXLEGHT 512 // Macimo numero 8de caracteres por linea
+
 /* Funcion que obtiene por consola el número del simbolo
   @return simbolo seleccionado por el usuario
 */
@@ -84,4 +87,40 @@ double getNCoins()
         printf("No ha seleccionado un valor valido : ");
         return getNCoins();
     }
+}
+
+/* Funcion que formatea el valor del precio a un valor double
+  @return valor del simbolo en formato double
+*/
+double formatPrice()
+{
+    // Se abre el archivo
+    FILE *f = fopen("./tmp/price", "r");
+    // Variables que sirven para recorrer el archivo
+    int i = 0;
+    char saver[MAXLINES][MAXLEGHT];
+    char price[MAXLEGHT];
+    // Recorremos el archivo buscando el precio
+    while (!feof(f) && !ferror(f))
+    {
+        if (fgets(saver[i], MAXLEGHT, f) != NULL)
+        {
+            if (strstr(saver[i], "rate") != NULL)
+            {
+                strcpy(price, saver[i]);
+                break;
+            }
+            i++;
+        }
+    }
+
+    // Cortamos la cadena para dejar solo el precio
+    strcpy(price, strtok(price, " "));
+    strcpy(price, strtok(NULL, " "));
+
+    // Se cierra el archivo
+    fclose(f);
+
+    // Devolvemos el precio en formato double
+    return atof(price);
 }

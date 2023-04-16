@@ -7,10 +7,15 @@ TMP_DIR = ./tmp
 CLFLAGS = gcc -g -Wall -pedantic -Werror -Wextra -Wconversion -std=gnu11
 NASMFLAGS = nasm -felf64
 
-all: $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o $(OBJ_DIR)/coinHelper.o $(OBJ_DIR)/simbolos.o
-	@mkdir -p $(BIN_DIR)
-	@$(CLFLAGS) $(OBJ_DIR)/main.o $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/mult.o $(OBJ_DIR)/coinHelper.o $(OBJ_DIR)/simbolos.o  -lcurl -o $(BIN_DIR)/getPrice
+all: dir $(OBJ_DIR)/main.o $(OBJ_DIR)/mult.o $(OBJ_DIR)/coinHelper.o $(OBJ_DIR)/simbolos.o $(BIN_DIR)/getPrice
+	@$(CLFLAGS) $(OBJ_DIR)/main.o $(OBJ_DIR)/mult.o $(OBJ_DIR)/coinHelper.o $(OBJ_DIR)/simbolos.o -o $(BIN_DIR)/calculadora
 	@echo Todo ha sido construido correctamente
+
+dir:
+	@mkdir -p $(BIN_DIR)
+
+$(BIN_DIR)/getPrice: $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/simbolos.o
+	@$(CLFLAGS) $(OBJ_DIR)/getPrice.o $(OBJ_DIR)/simbolos.o -lcurl -o $(BIN_DIR)/getPrice
 
 $(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
 	@mkdir -p $(OBJ_DIR)
