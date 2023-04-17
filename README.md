@@ -12,6 +12,7 @@
 > Ahora el programa imprimirá la cotización solicitada 
 
 ## Depuración
+Corremos la culculadora, elijiendo la opcion de BTC y USD para obtener el precio en USD del bitcoin:
 ![image](https://user-images.githubusercontent.com/30204958/232549865-d30845c3-6805-4ef7-b650-26266efef221.png)
 ![image](https://user-images.githubusercontent.com/30204958/232525142-24965656-45ee-43dc-91e5-66327c83f072.png)
 Por lo que accediendo a los datos en memoria en 0xffffce38 podemos ver los datos q se encuentran en el stack:
