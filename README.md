@@ -18,4 +18,6 @@ Vemos como main llama a la subrutina escrita en asembler llamada mult:
 ![image](https://user-images.githubusercontent.com/30204958/232525142-24965656-45ee-43dc-91e5-66327c83f072.png)
 Por lo que accediendo a los datos en memoria en 0xffffce38 podemos ver los datos q se encuentran en el stack:
 ![image](https://user-images.githubusercontent.com/30204958/232528169-6f9fd094-b28d-4d33-b8d9-0368aa56ebf5.png)
+Luego observamos los valores de los parametros pasados, el parametro cant se encuentra en 0xffffce40 y precio en 0xffffce48:
 ![image](https://user-images.githubusercontent.com/30204958/232549760-c44999c4-775f-4412-8c43-cc799e634c7c.png)
+Convirtiendo los valores de hexa a double obtenemos: cant=2 y precio=29382.729908202193.
