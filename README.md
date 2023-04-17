@@ -12,3 +12,4 @@
 > Ahora el programa imprimirá la cotización solicitada 
 
 ## Depuración
+![image](https://user-images.githubusercontent.com/30204958/232525142-24965656-45ee-43dc-91e5-66327c83f072.png)
